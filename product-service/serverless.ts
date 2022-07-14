@@ -5,7 +5,7 @@ import {getProductsById, getProductsList} from '@functions/index';
 const serverlessConfiguration: AWS = {
   service: 'gorilla-fruit-product-service',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild'],
+  plugins: ['serverless-esbuild', 'serverless-webpack'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
