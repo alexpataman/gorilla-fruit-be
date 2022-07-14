@@ -4,7 +4,7 @@ import { middyfy } from '@libs/lambda';
 import axios from 'axios';
 
 import schema from './schema';
-import { PRODUCT_LIST_PATH, RESPONSE_CODES, BAD_REQUEST, SOMETHING_GET_WRONG } from '../../constants';
+import { PRODUCT_LIST_PATH, RESPONSE_CODES, BAD_REQUEST, SOMETHING_WENT_WRONG_MESSAGE } from '../../constants';
 
 const products: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async () => {
 
@@ -13,7 +13,7 @@ const products: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async () => 
     return formatJSONResponse(response.data);
   } catch {
     return formatJSONResponse({
-      message: SOMETHING_GET_WRONG,
+      message: SOMETHING_WENT_WRONG_MESSAGE,
     }, RESPONSE_CODES[BAD_REQUEST]);
   }
 };
