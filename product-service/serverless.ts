@@ -4,8 +4,9 @@ import {getProductsById, getProductsList} from '@functions/index';
 
 const serverlessConfiguration: AWS = {
   service: 'gorilla-fruit-product-service',
+  configValidationMode: 'error',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild', 'serverless-webpack'],
+  plugins: ['serverless-auto-swagger', 'serverless-esbuild', 'serverless-webpack'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
@@ -30,6 +31,11 @@ const serverlessConfiguration: AWS = {
   },
   package: { individually: true },
   custom: {
+    webpack: {
+      excludeFiles: [
+        '**/swagger/*.{ts,py}',
+      ]
+    },
     esbuild: {
       bundle: true,
       minify: false,
