@@ -6,7 +6,12 @@ const serverlessConfiguration: AWS = {
   service: 'gorilla-fruit-product-service',
   configValidationMode: 'error',
   frameworkVersion: '3',
-  plugins: ['serverless-auto-swagger', 'serverless-esbuild', 'serverless-webpack'],
+  plugins: [
+    'serverless-auto-swagger',
+    'serverless-esbuild',
+    'serverless-webpack',
+    'serverless-offline'
+  ],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
