@@ -21,8 +21,14 @@ export default {
             description: 'Success',
             bodyType: 'Product',
           },
-          [RESPONSE_CODES[BAD_REQUEST]]: SOMETHING_WENT_WRONG_MESSAGE,
-          [RESPONSE_CODES[NOT_FOUND]]: PRODUCT_NOT_FOUND_MESSAGE,
+          [RESPONSE_CODES[NOT_FOUND]]: {
+            description: PRODUCT_NOT_FOUND_MESSAGE,
+            bodyType: 'Error',
+          },
+          [RESPONSE_CODES[BAD_REQUEST]]: {
+            description: SOMETHING_WENT_WRONG_MESSAGE,
+            bodyType: 'Error',
+          },
         }
       },
     },

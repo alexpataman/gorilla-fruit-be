@@ -7,3 +7,7 @@ export type Product = {
   count: number,
   price: number
 }
+
+export type Error = {
+  message: string
+}

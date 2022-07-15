@@ -19,7 +19,10 @@ export default {
             description: 'Success',
             bodyType: 'Products',
           },
-          [RESPONSE_CODES[BAD_REQUEST]]: SOMETHING_WENT_WRONG_MESSAGE,
+          [RESPONSE_CODES[BAD_REQUEST]]: {
+            description: SOMETHING_WENT_WRONG_MESSAGE,
+            bodyType: 'Error',
+          },
         }
       },
     },
