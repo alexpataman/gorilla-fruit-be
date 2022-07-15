@@ -4,7 +4,7 @@ import { middyfy } from '@libs/lambda';
 import axios from 'axios';
 
 import schema from './schema';
-import { PRODUCT_LIST_PATH, RESPONSE_CODES, BAD_REQUEST, SOMETHING_WENT_WRONG_MESSAGE } from '../../constants';
+import { PRODUCT_LIST_PATH, RESPONSE_CODES, BAD_REQUEST, SOMETHING_WENT_WRONG_MESSAGE } from '@/constants';
 
 const products: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async () => {
   try {

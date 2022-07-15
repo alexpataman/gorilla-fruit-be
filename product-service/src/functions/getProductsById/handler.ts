@@ -11,7 +11,7 @@ import {
   NOT_FOUND,
   SOMETHING_WENT_WRONG_MESSAGE,
   PRODUCT_NOT_FOUND_MESSAGE,
-} from '../../constants';
+} from '@/constants';
 
 const getProductsById: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
   const { productId } = event.pathParameters;
