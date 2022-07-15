@@ -7,7 +7,7 @@ import schema from './schema';
 import {
   PRODUCT_LIST_PATH,
   RESPONSE_CODES,
-  BAD_REQUEST,
+  INTERNAL_SERVER_ERROR,
   NOT_FOUND,
   SOMETHING_WENT_WRONG_MESSAGE,
   PRODUCT_NOT_FOUND_MESSAGE,
@@ -32,7 +32,7 @@ const getProductsById: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async
   } catch {
     return formatJSONResponse({
       message: SOMETHING_WENT_WRONG_MESSAGE,
-    }, RESPONSE_CODES[BAD_REQUEST]);
+    }, RESPONSE_CODES[INTERNAL_SERVER_ERROR]);
   }
 };
 

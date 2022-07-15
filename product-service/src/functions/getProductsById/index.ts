@@ -1,6 +1,6 @@
 import { handlerPath } from '@libs/handler-resolver';
 import {
-  BAD_REQUEST,
+  INTERNAL_SERVER_ERROR,
   NOT_FOUND,
   PRODUCT_NOT_FOUND_MESSAGE,
   RESPONSE_CODES,
@@ -25,7 +25,7 @@ export default {
             description: PRODUCT_NOT_FOUND_MESSAGE,
             bodyType: 'Error',
           },
-          [RESPONSE_CODES[BAD_REQUEST]]: {
+          [RESPONSE_CODES[INTERNAL_SERVER_ERROR]]: {
             description: SOMETHING_WENT_WRONG_MESSAGE,
             bodyType: 'Error',
           },
