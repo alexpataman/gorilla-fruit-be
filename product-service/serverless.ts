@@ -31,8 +31,8 @@ const serverlessConfiguration: AWS = {
   },
   // import the function via paths
   functions: {
+    getProductsList,
     getProductsById,
-    getProductsList
   },
   package: { individually: true },
   custom: {
