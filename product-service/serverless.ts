@@ -8,7 +8,6 @@ const serverlessConfiguration: AWS = {
   frameworkVersion: '3',
   plugins: [
     'serverless-auto-swagger',
-    'serverless-esbuild',
     'serverless-webpack',
     'serverless-offline'
   ],
