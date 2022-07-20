@@ -8,8 +8,8 @@ import { getProducts } from "@/services/product";
 
 const products: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async () => {
   try {
-    const products = await getProducts();
-    return formatJSONResponse(products);
+    const items = await getProducts();
+    return formatJSONResponse({items});
   } catch {
     return formatJSONResponse({
       message: SOMETHING_WENT_WRONG_MESSAGE,

@@ -19,7 +19,7 @@ const getProductsById: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async
     const item = await getProduct(productId);
 
     if (item) {
-      return formatJSONResponse(item);
+      return formatJSONResponse({item});
     } else {
       return formatJSONResponse(
         {

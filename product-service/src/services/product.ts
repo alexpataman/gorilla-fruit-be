@@ -1,7 +1,8 @@
 import { getDbClient } from "@/utils/db";
 import { BAD_REQUEST } from "@/constants";
+import { Product, Products } from "@/types/api-types";
 
-export const getProducts = async () => {
+export const getProducts = async (): Promise<Products> => {
   const client = getDbClient();
   await client.connect();
 
@@ -14,7 +15,7 @@ export const getProducts = async () => {
   return rows;
 }
 
-export const getProduct = async (id: string) => {
+export const getProduct = async (id: string): Promise<Product> => {
   if (!/^[\w\d-]*$/ig.test(id)) {
     throw Error(BAD_REQUEST);
   }
