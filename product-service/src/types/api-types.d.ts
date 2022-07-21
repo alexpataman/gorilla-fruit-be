@@ -8,6 +8,8 @@ export type Product = {
   price: number
 }
 
+export type CreateProductRequest = Omit<Product, 'id'>;
+
 export type Error = {
   message: string
 }

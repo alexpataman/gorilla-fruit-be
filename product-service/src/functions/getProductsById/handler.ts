@@ -18,7 +18,7 @@ const getProductsById: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async
   try {
     const item = await getProduct(productId);
 
-    if (item) {
+    if (item.length) {
       return formatJSONResponse({item});
     } else {
       return formatJSONResponse(
@@ -27,7 +27,7 @@ const getProductsById: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async
         },
         RESPONSE_CODES[NOT_FOUND]);
     }
-  } catch {
+  } catch(e) {
     return formatJSONResponse({
       message: SOMETHING_WENT_WRONG_MESSAGE,
     }, RESPONSE_CODES[INTERNAL_SERVER_ERROR]);
