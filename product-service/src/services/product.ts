@@ -5,7 +5,10 @@ import { HTTP_CODE, HttpError } from '@/utils/http';
 
 const validateProduct = (product) => {
   const { title, description, price, count } = product;
-  return [title, description, price, count].every((value) => value !== undefined && value !== '');
+  return (
+    [title, description, price, count].every((value) => value !== undefined && value !== '') &&
+    count > 0
+  );
 };
 
 export const addProduct = async (product: CreateProductRequest): Promise<Product | void> => {
