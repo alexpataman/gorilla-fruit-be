@@ -14,11 +14,11 @@ export default {
         responseData: {
           [HTTP_CODE.SUCCESS]: {
             description: 'Success',
-            bodyType: 'productsResponse',
+            bodyType: 'ProductsResponse',
           },
           [HTTP_CODE.INTERNAL_SERVER_ERROR]: {
             description: SOMETHING_WENT_WRONG_MESSAGE,
-            bodyType: 'errorResponse',
+            bodyType: 'ErrorResponse',
           },
         },
       },

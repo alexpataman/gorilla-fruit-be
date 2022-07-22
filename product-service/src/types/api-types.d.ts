@@ -13,17 +13,17 @@ export type CreateProductRequest = {
   price: number;
 };
 
-export type httpResponse = {
+export type HttpResponse = {
   code: number;
   error?: string;
 };
 
-export type errorResponse = {
+export type ErrorResponse = {
   code: number;
   error: string;
 };
 
-export type productsResponse = httpResponse & {
+export type ProductsResponse = HttpResponse & {
   code: number;
   items?: Product[];
 };
