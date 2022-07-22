@@ -1,10 +1,6 @@
 import { handlerPath } from '@libs/handler-resolver';
-import {
-  RESPONSE_CODES,
-  SUCCESS,
-  SOMETHING_WENT_WRONG_MESSAGE,
-  INTERNAL_SERVER_ERROR
-} from '@/constants'
+import { SOMETHING_WENT_WRONG_MESSAGE } from '@/constants';
+import { HTTP_CODE } from '@/utils/http';
 
 export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
@@ -15,15 +11,15 @@ export default {
         path: '/products',
         description: 'Returns full set of products',
         responseData: {
-          [RESPONSE_CODES[SUCCESS]]: {
+          [HTTP_CODE.SUCCESS]: {
             description: 'Success',
-            bodyType: 'Products',
+            bodyType: 'productsResponse',
           },
-          [RESPONSE_CODES[INTERNAL_SERVER_ERROR]]: {
+          [HTTP_CODE.INTERNAL_SERVER_ERROR]: {
             description: SOMETHING_WENT_WRONG_MESSAGE,
-            bodyType: 'Error',
+            bodyType: 'errorResponse',
           },
-        }
+        },
       },
     },
   ],

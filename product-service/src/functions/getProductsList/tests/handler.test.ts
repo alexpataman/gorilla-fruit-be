@@ -1,13 +1,29 @@
 import * as handler from '../handler';
 import { mockedProductsList } from './fixtures';
-const axios = require("axios");
+import { Client } from 'pg';
 
-jest.mock("axios");
-axios.get.mockResolvedValue({ data: mockedProductsList });
+jest.mock('pg', () => {
+  const mClient = {
+    connect: jest.fn(),
+    query: jest.fn(),
+    end: jest.fn(),
+  };
+  return { Client: jest.fn(() => mClient) };
+});
 
-test('Get list of products', async () => {
-  const {statusCode, body} = await handler.main('',null);
-  const data = JSON.parse(body)
-  expect(statusCode).toBe(200);
-  expect(data.length).toBe(2);
+describe('getProductsList test', () => {
+  let client;
+  beforeEach(() => {
+    client = new Client();
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  test('Get list of products', async () => {
+    client.query.mockResolvedValue(mockedProductsList);
+    const { statusCode, body } = await handler.main('', null);
+    const { data } = JSON.parse(body);
+    expect(statusCode).toBe(200);
+    expect(data.length).toBe(2);
+  });
 });

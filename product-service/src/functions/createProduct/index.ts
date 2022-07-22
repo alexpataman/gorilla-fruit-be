@@ -1,10 +1,6 @@
 import { handlerPath } from '@libs/handler-resolver';
-import {
-  INTERNAL_SERVER_ERROR,
-  RESPONSE_CODES,
-  SOMETHING_WENT_WRONG_MESSAGE,
-  SUCCESS
-} from "@/constants";
+import { SOMETHING_WENT_WRONG_MESSAGE } from '@/constants';
+import { HTTP_CODE } from '@/utils/http';
 
 export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
@@ -13,17 +9,18 @@ export default {
       httpApi: {
         method: 'post',
         path: '/products',
+        bodyType: 'CreateProductRequest',
         description: 'Add new product',
         responseData: {
-          [RESPONSE_CODES[SUCCESS]]: {
+          [HTTP_CODE.SUCCESS]: {
             description: 'Success',
-            bodyType: 'Product',
+            bodyType: 'productsResponse',
           },
-          [RESPONSE_CODES[INTERNAL_SERVER_ERROR]]: {
+          [HTTP_CODE.INTERNAL_SERVER_ERROR]: {
             description: SOMETHING_WENT_WRONG_MESSAGE,
-            bodyType: 'Error',
+            bodyType: 'errorResponse',
           },
-        }
+        },
       },
     },
   ],
