@@ -22,8 +22,8 @@ describe('getProductsList test', () => {
   test('Get list of products', async () => {
     client.query.mockResolvedValue(mockedProductsList);
     const { statusCode, body } = await handler.main('', null);
-    const { data } = JSON.parse(body);
+    const { items } = JSON.parse(body);
     expect(statusCode).toBe(200);
-    expect(data.length).toBe(2);
+    expect(items.length).toBe(2);
   });
 });

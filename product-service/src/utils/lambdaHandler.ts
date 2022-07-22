@@ -12,7 +12,7 @@ export const lambdaHandler = (callback: (event) => Promise<any>, schema) => {
     };
     try {
       logger.log(`Request:\n`, event);
-      response['data'] = await callback(event);
+      response['items'] = await callback(event);
     } catch (error) {
       response['code'] = error.statusCode || error.code;
       response['error'] = error.message;

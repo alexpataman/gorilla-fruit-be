@@ -25,9 +25,9 @@ describe('getProductsById test', () => {
       { pathParameters: { productId: '7567ec4b-b10c-48c5-9345-fc73c48a80aa' } },
       null
     );
-    const { data } = JSON.parse(body);
+    const { items } = JSON.parse(body);
     expect(statusCode).toBe(200);
-    expect(data[0].title).toBe('ProductOne Test');
+    expect(items[0].title).toBe('ProductOne Test');
   });
 
   test("Wrong product isn't found by ID", async () => {

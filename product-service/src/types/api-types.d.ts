@@ -25,5 +25,5 @@ export type errorResponse = {
 
 export type productsResponse = httpResponse & {
   code: number;
-  data?: Product[];
+  items?: Product[];
 };
