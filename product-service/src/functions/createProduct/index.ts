@@ -7,9 +7,10 @@ export default {
   events: [
     {
       httpApi: {
-        method: 'get',
+        method: 'post',
         path: '/products',
-        description: 'Returns full set of products',
+        bodyType: 'CreateProductRequest',
+        description: 'Add new product',
         responseData: {
           [HTTP_CODE.SUCCESS]: {
             description: 'Success',

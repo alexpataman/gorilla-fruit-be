@@ -1,12 +1,6 @@
 import { handlerPath } from '@libs/handler-resolver';
-import {
-  INTERNAL_SERVER_ERROR,
-  NOT_FOUND,
-  PRODUCT_NOT_FOUND_MESSAGE,
-  RESPONSE_CODES,
-  SOMETHING_WENT_WRONG_MESSAGE,
-  SUCCESS
-} from "@/constants";
+import { PRODUCT_NOT_FOUND_MESSAGE, SOMETHING_WENT_WRONG_MESSAGE } from '@/constants';
+import { HTTP_CODE } from '@/utils/http';
 
 export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
@@ -17,19 +11,19 @@ export default {
         path: '/products/{productId}',
         description: 'Returns information about particular product',
         responseData: {
-          [RESPONSE_CODES[SUCCESS]]: {
+          [HTTP_CODE.SUCCESS]: {
             description: 'Success',
-            bodyType: 'Product',
+            bodyType: 'ProductsResponse',
           },
-          [RESPONSE_CODES[NOT_FOUND]]: {
+          [HTTP_CODE.NOT_FOUND]: {
             description: PRODUCT_NOT_FOUND_MESSAGE,
-            bodyType: 'Error',
+            bodyType: 'ErrorResponse',
           },
-          [RESPONSE_CODES[INTERNAL_SERVER_ERROR]]: {
+          [HTTP_CODE.INTERNAL_SERVER_ERROR]: {
             description: SOMETHING_WENT_WRONG_MESSAGE,
-            bodyType: 'Error',
+            bodyType: 'ErrorResponse',
           },
-        }
+        },
       },
     },
   ],
