@@ -1,6 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 
-import importProductsFile from '@functions/importProductsFile';
+import { importProductsFile, importFileParser } from '@functions/index';
 
 const serverlessConfiguration: AWS = {
   service: 'import-service',
@@ -22,9 +22,20 @@ const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
     },
+    iam: {
+      role: {
+        statements: [
+          {
+            Effect: 'Allow',
+            Action: ['s3:getObject'],
+            Resource: ['arn:aws:s3:::gorilla-fruit-storage/*'],
+          },
+        ],
+      },
+    },
   },
   // import the function via paths
-  functions: { importProductsFile },
+  functions: { importProductsFile, importFileParser },
   package: { individually: true },
   useDotenv: true,
   custom: {
