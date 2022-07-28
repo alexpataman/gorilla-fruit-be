@@ -27,7 +27,12 @@ const serverlessConfiguration: AWS = {
         statements: [
           {
             Effect: 'Allow',
-            Action: ['s3:getObject'],
+            Action: ['s3:ListBucket'],
+            Resource: ['arn:aws:s3:::gorilla-fruit-storage'],
+          },
+          {
+            Effect: 'Allow',
+            Action: ['s3:*'],
             Resource: ['arn:aws:s3:::gorilla-fruit-storage/*'],
           },
         ],
