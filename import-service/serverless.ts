@@ -21,6 +21,8 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      SQS_URL:
+        'https://sqs.eu-west-1.amazonaws.com/276910034468/gorilla-fruit-product-service-queue',
     },
     iam: {
       role: {
@@ -34,6 +36,11 @@ const serverlessConfiguration: AWS = {
             Effect: 'Allow',
             Action: ['s3:*'],
             Resource: ['arn:aws:s3:::gorilla-fruit-storage/*'],
+          },
+          {
+            Effect: 'Allow',
+            Action: ['sqs:SendMessage'],
+            Resource: ['arn:aws:sqs:eu-west-1:276910034468:gorilla-fruit-product-service-queue'],
           },
         ],
       },
