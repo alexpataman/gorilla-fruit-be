@@ -34,7 +34,7 @@ const serverlessConfiguration: AWS = {
       PG_DATABASE: process.env.PG_DATABASE,
       PG_USERNAME: process.env.PG_USERNAME,
       PG_PASSWORD: process.env.PG_PASSWORD,
-      SQS_URL: 'Ref:SQSQueue',
+      SNS_ARN: { Ref: 'SNSTopic' },
     },
     iam: {
       role: {
@@ -43,6 +43,11 @@ const serverlessConfiguration: AWS = {
             Effect: 'Allow',
             Action: ['sqs:*'],
             Resource: [{ 'Fn::GetAtt': ['SQSQueue', 'Arn'] }],
+          },
+          {
+            Effect: 'Allow',
+            Action: ['sns:*'],
+            Resource: [{ Ref: 'SNSTopic' }],
           },
         ],
       },
@@ -54,6 +59,20 @@ const serverlessConfiguration: AWS = {
         Type: 'AWS::SQS::Queue',
         Properties: {
           QueueName: 'gorilla-fruit-product-service-queue',
+        },
+      },
+      SNSTopic: {
+        Type: 'AWS::SNS::Topic',
+        Properties: {
+          TopicName: 'gorilla-fruit-create-product-topic',
+        },
+      },
+      SNSSubscription: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Endpoint: 'alex.pataman@gmail.com',
+          Protocol: 'email',
+          TopicArn: { Ref: 'SNSTopic' },
         },
       },
     },

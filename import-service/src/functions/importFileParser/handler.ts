@@ -18,6 +18,9 @@ export const main = lambdaHandler(async (event) => {
           .createReadStream()
           .pipe(csv())
           .on('data', (data) => {
+            if (!data) {
+              return;
+            }
             sqs.sendMessage(
               {
                 QueueUrl: process.env.SQS_URL,
