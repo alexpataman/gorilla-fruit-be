@@ -1,6 +1,11 @@
 import type { AWS } from '@serverless/typescript';
 import * as dotenv from 'dotenv';
-import {getProductsById, getProductsList, createProduct} from '@functions/index';
+import {
+  getProductsById,
+  getProductsList,
+  createProduct,
+  catalogBatchProcess,
+} from '@functions/index';
 
 dotenv.config();
 
@@ -8,11 +13,7 @@ const serverlessConfiguration: AWS = {
   service: 'gorilla-fruit-product-service',
   configValidationMode: 'error',
   frameworkVersion: '3',
-  plugins: [
-    'serverless-auto-swagger',
-    'serverless-esbuild',
-    'serverless-offline'
-  ],
+  plugins: ['serverless-auto-swagger', 'serverless-esbuild', 'serverless-offline'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
@@ -33,18 +34,43 @@ const serverlessConfiguration: AWS = {
       PG_DATABASE: process.env.PG_DATABASE,
       PG_USERNAME: process.env.PG_USERNAME,
       PG_PASSWORD: process.env.PG_PASSWORD,
+      SQS_URL: 'Ref:SQSQueue',
+    },
+    iam: {
+      role: {
+        statements: [
+          {
+            Effect: 'Allow',
+            Action: ['sqs:*'],
+            Resource: [{ 'Fn::GetAtt': ['SQSQueue', 'Arn'] }],
+          },
+        ],
+      },
     },
   },
-  // import the function via paths
+  resources: {
+    Resources: {
+      SQSQueue: {
+        Type: 'AWS::SQS::Queue',
+        Properties: {
+          QueueName: 'gorilla-fruit-product-service-queue',
+        },
+      },
+    },
+  },
   functions: {
     getProductsList,
     getProductsById,
     createProduct,
+    catalogBatchProcess,
   },
   package: { individually: true },
   custom: {
+    autoswagger: {
+      generateSwaggerOnDeploy: false,
+    },
     'serverless-offline': {
-      httpPort: 4000
+      httpPort: 4000,
     },
     esbuild: {
       bundle: true,

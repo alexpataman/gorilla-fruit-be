@@ -39,11 +39,13 @@ const serverlessConfiguration: AWS = {
       },
     },
   },
-  // import the function via paths
   functions: { importProductsFile, importFileParser },
   package: { individually: true },
   useDotenv: true,
   custom: {
+    autoswagger: {
+      generateSwaggerOnDeploy: false,
+    },
     'serverless-offline': {
       httpPort: '${env:OFFLINE_HTTP_PORT}',
       lambdaPort: '${env:OFFLINE_LAMBDA_PORT}',
