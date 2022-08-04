@@ -16,7 +16,6 @@
     "@middy/http-json-body-parser": "^2.5.3",
     "aws-sdk": "^2.1187.0",
     "axios": "^0.27.2",
-    "dotenv": "^16.0.1",
     "pg": "^8.7.3"
   },
   "devDependencies": {
