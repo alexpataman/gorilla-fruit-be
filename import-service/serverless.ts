@@ -21,8 +21,9 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
-      SQS_URL:
-        'https://sqs.eu-west-1.amazonaws.com/276910034468/gorilla-fruit-product-service-queue',
+      DEFAULT_REGION: '${self:provider.region}',
+      SQS_URL: '${env:SQS_URL}',
+      BUCKET_NAME: '${env:S3_BUCKET_NAME}',
     },
     iam: {
       role: {
@@ -30,17 +31,17 @@ const serverlessConfiguration: AWS = {
           {
             Effect: 'Allow',
             Action: ['s3:ListBucket'],
-            Resource: ['arn:aws:s3:::gorilla-fruit-storage'],
+            Resource: ['${env:S3_BUCKET_ARN}'],
           },
           {
             Effect: 'Allow',
             Action: ['s3:*'],
-            Resource: ['arn:aws:s3:::gorilla-fruit-storage/*'],
+            Resource: ['${env:S3_BUCKET_ARN}/*'],
           },
           {
             Effect: 'Allow',
             Action: ['sqs:SendMessage'],
-            Resource: ['arn:aws:sqs:eu-west-1:276910034468:gorilla-fruit-product-service-queue'],
+            Resource: ['${env:SQS_ARN}'],
           },
         ],
       },

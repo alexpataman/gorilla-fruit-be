@@ -3,11 +3,12 @@ import * as AWS from 'aws-sdk';
 import { lambdaHandler } from '@/utils/lambdaHandler';
 import { HTTP_CODE, HttpError } from '@/utils/http';
 import { BAD_REQUEST_MESSAGE } from '@/constants';
-import { BUCKET_NAME, DEFAULT_REGION, UPLOADED_DIR } from '@/constants/aws';
+import { UPLOADED_DIR } from '@/constants/aws';
 
 import schema from './schema';
 
 export const main = lambdaHandler(async (event) => {
+  const { BUCKET_NAME, DEFAULT_REGION } = process.env;
   const { name } = event.queryStringParameters;
   if (!name) {
     throw new HttpError(HTTP_CODE.BAD_REQUEST, BAD_REQUEST_MESSAGE);

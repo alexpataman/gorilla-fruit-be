@@ -1,12 +1,11 @@
 import { handlerPath } from '@libs/handler-resolver';
-import { BUCKET_NAME } from '@/constants';
 
 export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
       s3: {
-        bucket: BUCKET_NAME,
+        bucket: '${env:S3_BUCKET_NAME}',
         event: 's3:ObjectCreated:*',
         rules: [
           {

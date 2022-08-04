@@ -1,11 +1,12 @@
 import { lambdaHandler } from '@/utils/lambdaHandler';
 import * as AWS from 'aws-sdk';
 import schema from './schema';
-import { BUCKET_NAME, DEFAULT_REGION, PARSED_DIR, UPLOADED_DIR } from '@/constants';
+import { PARSED_DIR, UPLOADED_DIR } from '@/constants';
 
 const csv = require('csv-parser');
 
 export const main = lambdaHandler(async (event) => {
+  const { BUCKET_NAME, DEFAULT_REGION } = process.env;
   const s3 = new AWS.S3({ region: DEFAULT_REGION });
   const sqs = new AWS.SQS();
   for (const record of event.Records) {
