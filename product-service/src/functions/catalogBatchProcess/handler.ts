@@ -2,6 +2,7 @@ import * as AWS from 'aws-sdk';
 import { lambdaHandler } from '@/utils/lambdaHandler';
 import { addProduct } from '@/services/product';
 import { DEFAULT_REGION } from '@/constants/aws';
+import { logger } from '@/utils/logger';
 
 import schema from './schema';
 
@@ -28,14 +29,14 @@ export const main = lambdaHandler(async (event) => {
               },
               (error) => {
                 if (error) {
-                  console.log(error);
+                  logger.log('SNS Publish error:', error);
                 }
                 resolve();
               }
             );
           });
         } catch (error) {
-          console.log('error:', error);
+          logger.log('Add product error:', error);
         }
       }
     })
