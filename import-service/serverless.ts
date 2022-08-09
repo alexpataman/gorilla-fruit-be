@@ -22,7 +22,7 @@ const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
       DEFAULT_REGION: '${self:provider.region}',
-      SQS_URL: '${env:SQS_URL}',
+      SQS_URL: '${param:sqsUrl}',
       BUCKET_NAME: '${env:S3_BUCKET_NAME}',
     },
     iam: {
@@ -41,7 +41,7 @@ const serverlessConfiguration: AWS = {
           {
             Effect: 'Allow',
             Action: ['sqs:SendMessage'],
-            Resource: ['${env:SQS_ARN}'],
+            Resource: ['${param:sqsArn}'],
           },
         ],
       },

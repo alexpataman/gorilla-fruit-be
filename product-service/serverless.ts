@@ -87,6 +87,16 @@ const serverlessConfiguration: AWS = {
         },
       },
     },
+    Outputs: {
+      sqsArn: {
+        Value: { 'Fn::GetAtt': ['SQSQueue', 'Arn'] },
+        Description: 'SQSQueue ARN',
+      },
+      sqsUrl: {
+        Value: { Ref: 'SQSQueue' },
+        Description: 'SQSQueue URL',
+      },
+    },
   },
   functions: {
     getProductsList,
