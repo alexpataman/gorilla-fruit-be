@@ -21,6 +21,9 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      DEFAULT_REGION: '${self:provider.region}',
+      SQS_URL: '${param:sqsUrl}',
+      BUCKET_NAME: '${env:S3_BUCKET_NAME}',
     },
     iam: {
       role: {
@@ -28,22 +31,29 @@ const serverlessConfiguration: AWS = {
           {
             Effect: 'Allow',
             Action: ['s3:ListBucket'],
-            Resource: ['arn:aws:s3:::gorilla-fruit-storage'],
+            Resource: ['${env:S3_BUCKET_ARN}'],
           },
           {
             Effect: 'Allow',
             Action: ['s3:*'],
-            Resource: ['arn:aws:s3:::gorilla-fruit-storage/*'],
+            Resource: ['${env:S3_BUCKET_ARN}/*'],
+          },
+          {
+            Effect: 'Allow',
+            Action: ['sqs:SendMessage'],
+            Resource: ['${param:sqsArn}'],
           },
         ],
       },
     },
   },
-  // import the function via paths
   functions: { importProductsFile, importFileParser },
   package: { individually: true },
   useDotenv: true,
   custom: {
+    autoswagger: {
+      generateSwaggerOnDeploy: false,
+    },
     'serverless-offline': {
       httpPort: '${env:OFFLINE_HTTP_PORT}',
       lambdaPort: '${env:OFFLINE_LAMBDA_PORT}',

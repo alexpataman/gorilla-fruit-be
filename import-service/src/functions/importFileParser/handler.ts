@@ -1,17 +1,17 @@
 import { lambdaHandler } from '@/utils/lambdaHandler';
 import * as AWS from 'aws-sdk';
 import schema from './schema';
-import { BUCKET_NAME, DEFAULT_REGION, PARSED_DIR, UPLOADED_DIR } from '@/constants';
+import { PARSED_DIR, UPLOADED_DIR } from '@/constants';
 
 const csv = require('csv-parser');
 
 export const main = lambdaHandler(async (event) => {
+  const { BUCKET_NAME, DEFAULT_REGION } = process.env;
   const s3 = new AWS.S3({ region: DEFAULT_REGION });
-  const result = [];
+  const sqs = new AWS.SQS();
   for (const record of event.Records) {
     try {
-      const recordData = await new Promise((resolve, reject) => {
-        const chunks = [];
+      await new Promise<void | string>((resolve, reject) => {
         s3.getObject({
           Bucket: BUCKET_NAME,
           Key: record.s3.object.key,
@@ -19,21 +19,34 @@ export const main = lambdaHandler(async (event) => {
           .createReadStream()
           .pipe(csv())
           .on('data', (data) => {
-            chunks.push(data);
+            if (!data) {
+              return;
+            }
+            sqs.sendMessage(
+              {
+                QueueUrl: process.env.SQS_URL,
+                MessageBody: JSON.stringify({
+                  title: data.Title,
+                  description: data.Description,
+                  price: data.Price,
+                  count: data.Count,
+                }),
+              },
+              () => {
+                console.log('Sent to SQS: ', data.Title);
+              }
+            );
           })
           .on('error', (error) => {
             reject(error.message);
           })
           .on('end', () => {
-            resolve(chunks);
+            resolve();
           });
       });
-      result.push(`File: ${record.s3.object.key}`, recordData);
     } catch (error) {
       throw new Error(error.message);
     }
-
-    console.log('Parsed content:', result);
 
     await s3
       .copyObject({
