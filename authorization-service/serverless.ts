@@ -1,14 +1,14 @@
 import type { AWS } from '@serverless/typescript';
-
-import basicAuthorizer from '@functions/basicAuthorizer';
+import { basicAuthorizer } from '@/functions';
 
 const serverlessConfiguration: AWS = {
   service: 'authorization-service',
   frameworkVersion: '3',
-  plugins: ['serverless-auto-swagger', 'serverless-esbuild', 'serverless-offline'],
+  plugins: ['serverless-dotenv-plugin', 'serverless-esbuild', 'serverless-offline'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
+    region: 'eu-west-1',
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,

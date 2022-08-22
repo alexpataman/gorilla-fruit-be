@@ -1,1 +1,1 @@
-export { default as createProduct } from './basicAuthorizer';
+export { default as basicAuthorizer } from './basicAuthorizer';

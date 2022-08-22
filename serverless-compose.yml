@@ -1,4 +1,7 @@
 services:
+  authorization-service:
+    path: authorization-service
+
   product-service:
     path: product-service
 
@@ -7,6 +10,3 @@ services:
     params:
       sqsArn: ${product-service.sqsArn}
       sqsUrl: ${product-service.sqsUrl}
-
-  authorization-service:
-    path: authorization-service
