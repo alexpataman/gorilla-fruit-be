@@ -1,4 +1,7 @@
 services:
+  authorization-service:
+    path: authorization-service
+
   product-service:
     path: product-service
 

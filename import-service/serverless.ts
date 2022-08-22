@@ -13,6 +13,17 @@ const serverlessConfiguration: AWS = {
     region: 'eu-west-1',
     httpApi: {
       cors: true,
+      authorizers: {
+        httpApiRequestAuthorizer: {
+          name: 'httpApiRequestAuthorizer',
+          functionArn:
+            'arn:aws:lambda:${self:provider.region}:${aws:accountId}:function:authorization-service-dev-basicAuthorizer',
+          type: 'request',
+          identitySource: '$request.header.Authorization',
+          enableSimpleResponses: true,
+          payloadVersion: '2.0',
+        },
+      },
     },
     apiGateway: {
       minimumCompressionSize: 1024,
